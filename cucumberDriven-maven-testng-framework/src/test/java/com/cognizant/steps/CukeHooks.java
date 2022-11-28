@@ -20,9 +20,9 @@ import java.io.IOException;
 import com.cognizant.framework.DriverManager;
 import com.cognizant.framework.TestHarness;
 
-import io.cucumber.core.api.Scenario;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
+import io.cucumber.java.Scenario;
 
 public class CukeHooks extends MasterSteps{
 	

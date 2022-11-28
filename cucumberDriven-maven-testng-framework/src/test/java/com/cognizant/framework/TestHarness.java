@@ -18,7 +18,8 @@ package com.cognizant.framework;
 import org.openqa.selenium.WebDriver;
 
 import io.appium.java_client.AppiumDriver;
-import io.cucumber.core.api.Scenario;
+import io.cucumber.java.Scenario;
+
 
 public class TestHarness {
 

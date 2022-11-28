@@ -20,9 +20,11 @@ import org.testng.annotations.DataProvider;
 import io.cucumber.testng.AbstractTestNGCucumberTests;
 import io.cucumber.testng.CucumberOptions;
 
-@CucumberOptions(features = "src/test/resources/features", glue = { "com.cognizant.steps" }, tags = {
-		"@Completed" }, strict = true, monochrome = true, plugin = { "pretty",
-				"pretty:target/cucumber-report/pretty.txt", "html:target/cucumber-report",
+@CucumberOptions(features = "src/test/resources/features", 
+		glue = { "com.cognizant.steps" }, 
+		tags = "@Completed" , 
+		monochrome = true, plugin = { "pretty",
+				"pretty:target/cucumber-report/pretty.txt", "html:target/cucumber-report/cucumber.html",
 				"json:target/cucumber-report/cucumber.json", "junit:target/cucumber-report/cucumber-junitreport.xml",
 				"com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:" })
 

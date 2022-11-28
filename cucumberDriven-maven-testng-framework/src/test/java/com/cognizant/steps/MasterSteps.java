@@ -16,6 +16,7 @@
 package com.cognizant.steps;
 
 import java.io.IOException;
+import java.time.Duration;
 import java.util.Properties;
 
 import org.openqa.selenium.By;
@@ -49,8 +50,8 @@ public class MasterSteps {
 	protected void attachScreenshotForWeb() {
 
 		try {
-			DriverManager.getTestParameters().getScenario().embed(Util.takeScreenshot(DriverManager.getWebDriver()),
-					"image/png");
+			DriverManager.getTestParameters().getScenario().attach(Util.takeScreenshot(DriverManager.getWebDriver()),
+					"image/png","");
 			ExtentCucumberAdapter
 					.addTestStepScreenCaptureFromPath(Util.takeScreenshotFile(DriverManager.getWebDriver()));
 		} catch (IOException e) {
@@ -66,8 +67,8 @@ public class MasterSteps {
 	protected void attachScreenshotForMobile() {
 
 		try {
-			DriverManager.getTestParameters().getScenario().embed(Util.takeScreenshot(DriverManager.getAppiumDriver()),
-					"image/png");
+			DriverManager.getTestParameters().getScenario().attach(Util.takeScreenshot(DriverManager.getAppiumDriver()),
+					"image/png","");
 			ExtentCucumberAdapter
 					.addTestStepScreenCaptureFromPath(Util.takeScreenshotFile(DriverManager.getAppiumDriver()));
 		} catch (IOException e) {
@@ -111,8 +112,11 @@ public class MasterSteps {
 	public void waitUntilPageLoaded(long timeOutInSeconds) {
 		WebElement oldPage = DriverManager.getWebDriver().findElement(By.tagName("html"));
 
-		(new WebDriverWait(DriverManager.getWebDriver(), timeOutInSeconds))
-				.until(ExpectedConditions.stalenessOf(oldPage));
+		/*(new WebDriverWait(DriverManager.getWebDriver(), timeOutInSeconds))
+				.until(ExpectedConditions.stalenessOf(oldPage));*/
+		
+		(new WebDriverWait(DriverManager.getWebDriver(), Duration.ofSeconds(timeOutInSeconds)))
+		.until(ExpectedConditions.stalenessOf(oldPage));
 
 	}
 
@@ -129,7 +133,8 @@ public class MasterSteps {
 			}
 		};
 
-		(new WebDriverWait(DriverManager.getWebDriver(), timeOutInSeconds)).until(pageReadyStateComplete);
+		//(new WebDriverWait(DriverManager.getWebDriver(), timeOutInSeconds)).until(pageReadyStateComplete);
+		(new WebDriverWait(DriverManager.getWebDriver(), Duration.ofSeconds(timeOutInSeconds))).until(pageReadyStateComplete);
 	}
 
 	/**
@@ -141,8 +146,11 @@ public class MasterSteps {
 	 *            The wait timeout in seconds
 	 */
 	public void waitUntilElementLocated(By by, long timeOutInSeconds) {
-		(new WebDriverWait(DriverManager.getWebDriver(), timeOutInSeconds))
-				.until(ExpectedConditions.presenceOfElementLocated(by));
+		/*(new WebDriverWait(DriverManager.getWebDriver(), timeOutInSeconds))
+				.until(ExpectedConditions.presenceOfElementLocated(by));*/
+		
+		(new WebDriverWait(DriverManager.getWebDriver(), Duration.ofSeconds(timeOutInSeconds)))
+		.until(ExpectedConditions.presenceOfElementLocated(by));
 	}
 
 	/**
@@ -154,8 +162,11 @@ public class MasterSteps {
 	 *            The wait timeout in seconds
 	 */
 	public void waitUntilElementVisible(By by, long timeOutInSeconds) {
-		(new WebDriverWait(DriverManager.getWebDriver(), timeOutInSeconds))
-				.until(ExpectedConditions.visibilityOfElementLocated(by));
+		/*(new WebDriverWait(DriverManager.getWebDriver(), timeOutInSeconds))
+				.until(ExpectedConditions.visibilityOfElementLocated(by));*/
+		
+		(new WebDriverWait(DriverManager.getWebDriver(), Duration.ofSeconds(timeOutInSeconds)))
+		.until(ExpectedConditions.visibilityOfElementLocated(by));
 	}
 
 	/**
@@ -167,8 +178,11 @@ public class MasterSteps {
 	 *            The wait timeout in seconds
 	 */
 	public void waitUntilElementEnabled(By by, long timeOutInSeconds) {
-		(new WebDriverWait(DriverManager.getWebDriver(), timeOutInSeconds))
-				.until(ExpectedConditions.elementToBeClickable(by));
+		/*(new WebDriverWait(DriverManager.getWebDriver(), timeOutInSeconds))
+				.until(ExpectedConditions.elementToBeClickable(by));*/
+		
+		(new WebDriverWait(DriverManager.getWebDriver(), Duration.ofSeconds(timeOutInSeconds)))
+		.until(ExpectedConditions.elementToBeClickable(by));
 	}
 
 	/**
@@ -180,8 +194,11 @@ public class MasterSteps {
 	 *            The wait timeout in seconds
 	 */
 	public void waitUntilElementDisabled(By by, long timeOutInSeconds) {
-		(new WebDriverWait(DriverManager.getWebDriver(), timeOutInSeconds))
-				.until(ExpectedConditions.not(ExpectedConditions.elementToBeClickable(by)));
+		/*(new WebDriverWait(DriverManager.getWebDriver(), timeOutInSeconds))
+				.until(ExpectedConditions.not(ExpectedConditions.elementToBeClickable(by)));*/
+		
+		(new WebDriverWait(DriverManager.getWebDriver(), Duration.ofSeconds(timeOutInSeconds)))
+		.until(ExpectedConditions.not(ExpectedConditions.elementToBeClickable(by)));
 	}
 
 	/**
@@ -241,8 +258,10 @@ public class MasterSteps {
 	 */
 	public Boolean isAlertPresent(long timeOutInSeconds) {
 		try {
-			new WebDriverWait(DriverManager.getWebDriver(), timeOutInSeconds)
-					.until(ExpectedConditions.alertIsPresent());
+			/*new WebDriverWait(DriverManager.getWebDriver(), timeOutInSeconds)
+					.until(ExpectedConditions.alertIsPresent());*/
+			new WebDriverWait(DriverManager.getWebDriver(), Duration.ofSeconds(timeOutInSeconds))
+			.until(ExpectedConditions.alertIsPresent());
 			return true;
 		} catch (TimeoutException ex) {
 			return false;

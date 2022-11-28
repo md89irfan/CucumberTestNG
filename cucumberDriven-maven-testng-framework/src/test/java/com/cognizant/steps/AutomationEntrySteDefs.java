@@ -15,6 +15,8 @@
  */
 package com.cognizant.steps;
 
+import java.time.Duration;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -82,7 +84,9 @@ public class AutomationEntrySteDefs extends MasterSteps {
 	 * @param timeOutInSeconds The wait timeout in seconds
 	 */
 	public void waitUntilElementLocated(By by, long timeOutInSeconds) {
-		(new WebDriverWait(driver, timeOutInSeconds)).until(ExpectedConditions.presenceOfElementLocated(by));
+		/*(new WebDriverWait(driver, timeOutInSeconds)).until(ExpectedConditions.presenceOfElementLocated(by));*/
+		
+		(new WebDriverWait(driver, Duration.ofSeconds(timeOutInSeconds))).until(ExpectedConditions.presenceOfElementLocated(by));
 	}
 
 }

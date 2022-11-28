@@ -17,7 +17,8 @@ package com.cognizant.framework;
 
 import org.openqa.selenium.Platform;
 
-import io.cucumber.core.api.Scenario;
+import io.cucumber.java.Scenario;
+
 
 /**
  * Class to encapsulate various input parameters required for each test script

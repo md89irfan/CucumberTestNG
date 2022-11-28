@@ -34,7 +34,6 @@ public class TestNGListener implements ITestListener, ISuiteListener {
 	Properties properties = Settings.getInstance();
 	static Logger log = Logger.getLogger(TestNGListener.class);
 
-	@Override
 	public void onStart(ISuite suite) {
 
 		if ((Boolean.parseBoolean(properties.getProperty("SaveReports")))) {
@@ -43,7 +42,6 @@ public class TestNGListener implements ITestListener, ISuiteListener {
 		}
 	}
 
-	@Override
 	public void onFinish(ISuite suite) {
 		if ((Boolean.parseBoolean(properties.getProperty("SaveReports")))) {
 			copyReportsFolder();
@@ -81,7 +79,6 @@ public class TestNGListener implements ITestListener, ISuiteListener {
 		// TimeStamp.reportPathWithTimeStamp = null;
 	}
 
-	@Override
 	public void onTestStart(ITestResult result) {
 
 		SeleniumTestParameters testParameters = new SeleniumTestParameters();
@@ -102,8 +99,94 @@ public class TestNGListener implements ITestListener, ISuiteListener {
 
 			isMobileExecution(executionMode, toolName, testParameters);
 			isAPIExecution(executionMode, toolName, testParameters);
+			
+			if(executionMode.equals("API")){
+				
+				testParameters.setExecutionMode(ExecutionMode.valueOf(executionMode));
+				
+			}else if(executionMode.equals("LOCAL")){
+				
+				testParameters.setExecutionMode(ExecutionMode.valueOf(executionMode));
 
-			switch (executionMode) {
+				if (testContext.getCurrentXmlTest().getLocalParameters().get("BrowserName") == null) {
+					testParameters.setBrowser(Browser.valueOf(properties.getProperty("DefaultBrowser")));
+
+				} else {
+					testParameters.setBrowser(
+							Browser.valueOf(testContext.getCurrentXmlTest().getLocalParameters().get("BrowserName")));
+				}
+				
+			}else if(executionMode.equals("GRID")){
+				
+				testParameters.setExecutionMode(ExecutionMode.valueOf(executionMode));
+
+				if (testContext.getCurrentXmlTest().getLocalParameters().get("BrowserName") == null) {
+					testParameters.setBrowser(Browser.valueOf(properties.getProperty("DefaultBrowser")));
+
+				} else {
+					testParameters.setBrowser(
+							Browser.valueOf(testContext.getCurrentXmlTest().getLocalParameters().get("BrowserName")));
+				}
+
+				if (testContext.getCurrentXmlTest().getLocalParameters().get("BrowserVersion") == null) {
+					testParameters.setBrowserVersion(properties.getProperty("DefaultBrowserVersion"));
+
+				} else {
+					testParameters.setBrowserVersion(
+							testContext.getCurrentXmlTest().getLocalParameters().get("BrowserVersion"));
+				}
+
+				if (testContext.getCurrentXmlTest().getLocalParameters().get("Platform") == null) {
+					testParameters.setPlatform(Platform.valueOf(properties.getProperty("DefaultPlatform")));
+
+				} else {
+					testParameters
+							.setBrowserVersion(testContext.getCurrentXmlTest().getLocalParameters().get("Platform"));
+				}
+				
+			}else if(executionMode.equals("MOBILE")){
+				
+				testParameters.setExecutionMode(ExecutionMode.valueOf(executionMode));
+
+				if (testContext.getCurrentXmlTest().getLocalParameters().get("ToolName") == null) {
+					testParameters.setMobileToolName(ToolName.valueOf(properties.getProperty("DefaultToolName")));
+				} else {
+					String mobileToolName = testContext.getCurrentXmlTest().getLocalParameters().get("ToolName");
+					testParameters.setMobileToolName((ToolName.valueOf(mobileToolName)));
+				}
+
+				if (testContext.getCurrentXmlTest().getLocalParameters().get("MobileExecutionPlatform") == null) {
+					testParameters.setMobileExecutionPlatform(
+							MobileExecutionPlatform.valueOf(properties.getProperty("DefaultMobileExecutionPlatform")));
+				} else {
+					String mobileExecutionPlatform = testContext.getCurrentXmlTest().getLocalParameters()
+							.get("MobileExecutionPlatform");
+					testParameters
+							.setMobileExecutionPlatform((MobileExecutionPlatform.valueOf(mobileExecutionPlatform)));
+				}
+
+				if (testContext.getCurrentXmlTest().getLocalParameters().get("DeviceName") == null) {
+					testParameters.setDeviceName(properties.getProperty("DefaultDeviceName"));
+
+				} else {
+					testParameters
+							.setDeviceName(testContext.getCurrentXmlTest().getLocalParameters().get("DeviceName"));
+				}
+				
+			}else{
+				
+				testParameters.setExecutionMode(ExecutionMode.valueOf(properties.getProperty("DefaultExecutionMode")));
+				if (testContext.getCurrentXmlTest().getLocalParameters().get("BrowerName") == null) {
+					testParameters.setBrowser(
+							Browser.valueOf(testContext.getCurrentXmlTest().getLocalParameters().get("BrowerName")));
+				} else {
+					testParameters.setBrowser(Browser.valueOf(properties.getProperty("DefaultBrowser")));
+				}
+				
+			}
+			
+
+			/*switch (executionMode) {
 
 			case "API":
 
@@ -195,7 +278,7 @@ public class TestNGListener implements ITestListener, ISuiteListener {
 				} else {
 					testParameters.setBrowser(Browser.valueOf(properties.getProperty("DefaultBrowser")));
 				}
-			}
+			}*/
 
 		} catch (Exception ex) {
 			log.error(
@@ -228,32 +311,26 @@ public class TestNGListener implements ITestListener, ISuiteListener {
 	 * 
 	 */
 
-	@Override
 	public void onTestSuccess(ITestResult result) {
 
 	}
 
-	@Override
 	public void onTestFailure(ITestResult result) {
 
 	}
 
-	@Override
 	public void onTestSkipped(ITestResult result) {
 
 	}
 
-	@Override
 	public void onTestFailedButWithinSuccessPercentage(ITestResult result) {
 
 	}
 
-	@Override
 	public void onStart(ITestContext context) {
 
 	}
-
-	@Override
+	
 	public void onFinish(ITestContext context) {
 
 	}
